@@ -13,7 +13,7 @@ package.domain = org.safewatch
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,jpeg,json
+source.include_exts = py,png,jpg,kv,atlas,jpeg,json,xlsx
 
 # (list) List of inclusions using pattern matching
 #source.include_patterns = assets/*,images/*.png
@@ -37,7 +37,7 @@ version = 1.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3.10,kivy==2.3.0,kivymd==1.2.0,watchdog,folium,matplotlib==3.5.0,kivy-garden.mapview,pandas,plyer==2.1.0,bs4,firebase-admin,bs4,requests
+requirements = python3.10,kivy==2.3.0,kivymd==1.2.0,watchdog,folium,matplotlib==3.5.0,kivy-garden.mapview,pandas,plyer==2.1.0,bs4,firebase-admin,bs4,requests,schedule
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
