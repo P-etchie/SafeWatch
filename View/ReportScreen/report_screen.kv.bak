@@ -1,0 +1,291 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import HelpInfo View.ReportScreen.components.HelpInfo
+<ReportScreenView>
+    md_bg_color: app.md_bg_color
+    name: 'report screen'
+
+    MDRelativeLayout:
+        size_hint: 1,1
+        orientation: 'vertical'
+        spacing: dp(10)
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            spacing: dp(10)
+            padding: dp(10)
+
+            MDTopAppBar:
+                id: topbar_action
+                icon_color: "teal"
+                title: "Report Crime"
+                right_action_items: [["information", lambda x: root.show_info_dialog(), "Export Reports"]] #
+                left_action_items: [["arrow-left-drop-circle", lambda x: root.switch_to_prev_screen()]]
+                md_bg_color: get_color_from_hex("#1E1E15")
+                specific_text_color: "teal"
+                text_color: get_color_from_hex('#b3cde0')
+                font_weight: "bold"
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                spacing: dp(10)
+                padding: dp(10)
+                adaptive_height: True
+                size_hint_y: .2
+
+                MDLabel:
+                    id: user_call_header
+                    text:"Call Reports"
+                    bold: True
+                    halign: "center"
+                    text_color: "teal"
+                    theme_text_color: "Custom"
+
+                MDLabel:
+                    id: user_sms_header
+                    text: "SMS Reports"
+                    bold: True
+                    halign: "center"
+                    text_color: "teal"
+                    theme_text_color: "Custom"
+
+                MDLabel:
+                    id: user_media_header
+                    text: "Media Uploads"
+                    bold: True
+                    halign: "center"
+                    text_color: "teal"
+                    theme_text_color: "Custom"
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                spacing: dp(10)
+                padding: dp(10)
+                adaptive_height: True
+                size_hint_y: .2
+
+                MDLabel:
+                    id: user_call_reports
+                    text:"0"
+                    bold: True
+                    halign: "center"
+                    text_color: "#FF5722"
+                    theme_text_color: "Custom"
+
+                MDLabel:
+                    id: user_sms_reports
+                    text: "0"
+                    bold: True
+                    halign: "center"
+                    text_color: "#FF5722"
+                    theme_text_color: "Custom"
+
+                MDLabel:
+                    id: user_media_reports
+                    text: "0"
+                    bold: True
+                    halign: "center"
+                    text_color: "#FF5722"
+                    theme_text_color: "Custom"
+
+
+            MDLabel:
+                text: "Select Crime Category To Report"
+                font_style: "H6"
+                halign: "left"
+                size_hint_y: None
+                height: self.texture_size[1]
+                theme_text_color: 'Custom'
+                text_color: 'teal'
+
+            ScrollView:
+                id: scroll_view
+                bar_width: 0
+                size_hint_y: .75
+                #adaptive_height: True
+
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    spacing: dp(10)
+                    padding: dp(10), dp(10), dp(10), 0
+                    adaptive_height: True
+                    adaptive_width: True
+                    size_hint_y: None
+                    #md_bg_color: "#3D4127"
+
+                    MDChipBox:
+                        CustomChip:
+                            id: chip1
+                            text: "Financial & White-Collar Crimes"
+                            icon: "cash-multiple"
+                            on_release: root.share_chip(chip1.text, chip1)
+
+                        CustomChip:
+                            id: chip2
+                            text: "Cyber Crimes"
+                            icon: "laptop"
+                            on_release: root.share_chip(chip2.text, chip2)
+
+                    MDChipBox:
+                        CustomChip:
+                            id: chip3
+                            text: "Violent Crimes"
+                            icon: "pistol"
+                            on_release: root.share_chip(chip3.text, chip3)
+
+                        CustomChip:
+                            id: chip4
+                            text: "Drug & Substance Related"
+                            icon: "truck"
+                            on_release: root.share_chip(chip4.text, chip4)
+
+                    MDChipBox:
+                        CustomChip:
+                            id: chip5
+                            text: "Terrorism & Organized Crimes"
+                            icon: "bomb"
+                            on_release: root.share_chip(chip5.text, chip5)
+
+                        CustomChip:
+                            id: chip6
+                            text: "Property Crimes"
+                            icon: "home-lock"
+                            on_release: root.share_chip(chip6.text, chip6)
+
+                    MDChipBox:
+                        CustomChip:
+                            id: chip7
+                            text: "Traffic & Transport Crimes"
+                            icon: "speedometer"
+                            on_release: root.share_chip(chip7.text, chip7)
+
+                        CustomChip
+                            id: chip8
+                            text: "Environmental Crimes"
+                            icon: "dump-truck"
+                            on_release: root.share_chip(chip8.text, chip8)
+
+            ScrollView:
+                bar_width: 0
+
+                MDBoxLayout:
+                    adaptive_width: False
+                    spacing: dp(5)
+                    padding: dp(5)
+                    orientation: 'vertical'
+                    adaptive_height: True
+                    size_hint_y: None
+
+                    MDTextField:
+                        id: premise_id
+                        hint_text: "Premise  (SuperMarket, Apartment, In-Door)"
+                        multiline: False
+
+                    MDTextField:
+                        id: location_id
+                        hint_text: "Location (Region, District, Province)"
+                        multiline: True
+
+                    MDTextField:
+                        id: offence_id
+                        hint_text: "Actual Offence"
+                        multiline: True
+
+                    MDTextField:
+                        id: county_id
+                        hint_text: "County"
+                        multiline: False
+
+                    MDTextField:
+                        id: time_id
+                        hint_text: "Time Occurred"
+                        multiline: True
+
+                    MDTextField:
+                        id: meta_data
+                        hint_text: "Additional Crime Details"
+                        multiline: True
+
+                    MDRaisedButton:
+                        text: "Submit Report"
+                        pos_hint: {"center_x": 0.8}
+                        on_release: root.model.add_new_report(root.chip_data,premise_id.text,location_id.text,offence_id.text,county_id.text,time_id.text,meta_data.text)
+
+            MDBoxLayout:
+                id: btm_layout
+                orientation: 'vertical'
+                adaptive_height: True
+                size_hint: 1, None
+                elevation: 5
+                md_bg_color: app.md_bg_color
+                padding: [dp(0),]
+
+
+                MDBottomNavigation:
+                    id: report_btm_nav
+                    selected_color_background: "#1E1E15"
+                    panel_color: "#1E1E15"
+                    spacing: dp(20)
+                    icon_color: "teal"
+                    text_color: "teal"
+                    icon_color_active: "teal"
+                    icon_color_normal: "teal"
+                    text_color_active: "teal"
+                    text_color_normal: "teal"
+                    theme_icon_color: "Custom"
+                    theme_text_color: "Custom"
+
+                    MDBottomNavigationItem:
+                        icon: "cellphone-dock"
+                        text: "Call"
+                        on_tab_release: root.show_call_dialog()
+
+                    MDBottomNavigationItem:
+                        icon: "message-badge"
+                        text: "message"
+                        on_tab_release: root.show_message_dialog()
+
+                    MDBottomNavigationItem:
+                        icon: "cloud-upload-outline"
+                        text: "Upload"
+                        on_tab_release: root.upload_user_local_crime_file()
+
+
+<MDChipBox@MDBoxLayout>:
+    orientation: "horizontal"
+    adaptive_height: True
+    spacing: dp(8)
+    size_hint_x: None
+    width: self.minimum_width
+
+<CustomLabel@MDLabel>
+    adaptive_size: True
+    theme_text_color: "Custom"
+    text_color: "#e6e9df"
+
+<CustomDropDown@MDDropDownItem>
+    line_color: "teal"
+    elevation: 5
+    size_hint_x: 1
+    adaptive_width: True
+    adaptive_height: True
+
+
+<CustomChip@MDChip>
+    text: ""
+    icon: ""
+    type: "input"
+    md_bg_color: "#2a3127"
+    line_color: "grey"
+    shadow_softness: 2
+    padding: dp(2)
+
+    MDChipLeadingIcon:
+        icon: root.icon
+        theme_text_color: "Custom"
+        text_color: "#68896c"
+
+    MDChipText:
+        text: root.text
+        theme_text_color: "Custom"
+        text_color: "#e6e9df"

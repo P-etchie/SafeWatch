@@ -1,0 +1,123 @@
+<MenuScreenView>
+    name: 'menu screen'
+    md_bg_color: app.md_bg_color
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: dp(5)
+        padding: dp(5)
+
+        MDTopAppBar:
+            title: " App Settings"
+            left_action_items: [["arrow-left", lambda x: root.switch_screen("home screen")]]
+            elevation: 4
+
+        ScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                padding: dp(20)
+                spacing: dp(20)
+                adaptive_height: True
+
+                MDLabel:
+                    text: "General Settings"
+                    theme_text_color: "Custom"
+                    text_color: 'teal'
+                    font_style: "H5"
+                    halign: "left"
+
+                MDSeparator:
+                    color: '#1E1E15'
+                    opacity: 0
+
+                MDList:
+                    OneLineAvatarIconListItem:
+                        text: "Change Theme Mode"
+                        on_release: root.toggle_theme()
+
+                        IconLeftWidget:
+                            icon: "theme-light-dark"
+
+
+                    OneLineAvatarIconListItem:
+                        text: "Exit Application"
+                        on_release: app.terminate_application()
+
+                        IconLeftWidget:
+                            icon: "exit-run"
+
+
+                MDSeparator:
+                    color: '#1e1e15'#
+                    opacity: 0
+
+                MDLabel:
+                    text: "Notifications"
+                    theme_text_color: "Custom"
+                    text_color: 'teal'
+                    font_style: "H6"
+
+                MDList:
+                    OneLineAvatarIconListItem:
+                        id: notification_instance
+                        text: "Enable Push Notifications"
+                        on_release: root.toggle_notifications(notification_instance)
+
+                        IconLeftWidget:
+                            icon: "bell"
+
+                    OneLineAvatarIconListItem:
+                        id: email_alert_instance
+                        text: "Enable Email Alerts"
+                        on_release: root.toggle_email_alerts(email_alert_instance)
+
+                        IconLeftWidget:
+                            id: email_icon
+                            icon: "email"
+
+                MDSeparator:
+                    color: '#1E1E15'
+                    opacity: 0
+
+                MDLabel:
+                    text: "Privacy"
+                    theme_text_color: "Custom"
+                    text_color: 'teal'
+                    font_style: "H6"
+
+                MDList:
+                    OneLineAvatarIconListItem:
+                        text: "Clear App Cache"
+                        on_release: app.clear_cache()
+
+                        IconLeftWidget:
+                            icon: "delete"
+
+                        #IconRightWidget:
+                            #icon: "chevron-right"
+
+                MDSeparator:
+                    color: '#1E1E15'
+                    opacity: 0
+
+                MDLabel:
+                    text: "About Developer"
+                    theme_text_color: "Custom"
+                    text_color: 'teal'
+                    font_style: "H6"
+
+                MDList:
+                    OneLineAvatarIconListItem:
+                        text: "View Developer Info"
+                        on_release: root.show_about()
+
+                        IconLeftWidget:
+                            icon: "account"
+
+                        #IconRightWidget:
+                            #icon: "chevron-right"
+                            #on_release: root.show_about()
+
+
+
+

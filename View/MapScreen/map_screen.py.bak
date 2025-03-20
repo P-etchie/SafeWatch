@@ -1,0 +1,158 @@
+import requests, json
+from kivy.clock import Clock
+from kivy.graphics import Color, Line
+from kivy_garden.mapview import MapView, MapMarker, MapLayer, MapSource
+from kivy.uix.label import Label
+from kivy.uix.popup import Popup
+from View.base_screen import BaseScreenView
+from View import screens
+
+class MapScreenView(BaseScreenView):
+    prev = None
+    _observers = []
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.lat, self.lon = -1.286389, 36.817223  # Nairobi coordinates
+        self.zoom = 7
+        self.use_double_tap = True
+        self.map_source = MapSource(url="https://tile.openstreetmap.org/{z}/{x}/{y}.png")
+        self.border_layer = None
+        self.markers = []
+
+    def on_enter(self):
+        self.mapview = self.ids.map_view
+        Clock.schedule_once(self.add_borders, 1)
+
+    def switch_screen(self, scr, *args):
+        screen_ = View.screens.screens.get(scr)
+        if screen_:
+            self.model = screen_['model']
+            self.controller =  screen_['controller'](self.model)
+            self.view = self.controller.get_view()
+            self.app.prev = self.app.manager_screens.current_screen.name
+            self.app.manager_screens.current = self.view.name
+
+    def add_borders(self, *args):
+        if not self.border_layer:
+            self.border_layer = BorderLayer(self)
+            self.mapview.add_layer(self.border_layer)
+            self.add_county_markers()
+
+    def add_county_markers(self):
+        if not self.border_layer or not self.border_layer.border_data:
+            return
+
+        for feature in self.border_layer.border_data["features"]:
+            county_name = feature["properties"]["name"]
+            coords = feature["geometry"]["coordinates"]
+            lat_sum, lon_sum, count = 0, 0, 0
+
+            for polygon in coords:
+                for line in polygon:
+                    for lon, lat in line:
+                        lat_sum += lat
+                        lon_sum += lon
+                        count += 1
+
+            if count > 0:
+                lat_center = lat_sum / count
+                lon_center = lon_sum / count
+
+                marker = MapMarker(lat=lat_center, lon=lon_center, source="marker.png")
+                marker.bind(on_release=lambda m, name=county_name: self.show_popup(name))
+                self.add_widget(marker)
+                self.markers.append(marker)
+
+    def show_popup(self, county_name):
+        popup = Popup(title="County Info",
+                      content=Label(text=f"Welcome to {county_name}"),
+                      size_hint=(0.5, 0.3))
+        popup.open()
+
+class BorderLayer(MapLayer, MapView):
+    OVERPASS_URL = "https://overpass-api.de/api/interpreter"
+    OVERPASS_QUERY = """
+    [out:json][timeout:60];  // Increase timeout to 60 seconds
+    area["ISO3166-1"="KE"]->.kenya;
+    relation["admin_level"="4"]["boundary"="administrative"](area.kenya);
+    out geom;
+    """
+
+    def __init__(self, mapview, **kwargs):
+        super().__init__(**kwargs)
+        self.mapview = mapview
+        self.border_data = None
+        self.labels = []
+        self.load_geojson()
+
+    def load_geojson(self):
+        try:
+            response = requests.get(self.OVERPASS_URL, params={"data": self.OVERPASS_QUERY})
+            response.raise_for_status()
+            data = response.json()
+            self.process_osm_data(data)
+        except requests.exceptions.RequestException as e:
+            print(f"❌ Error fetching GeoJSON: {e}")
+            self.border_data = None
+
+    def process_osm_data(self, osm_data):
+        features = []
+        for element in osm_data.get("elements", []):
+            if element["type"] == "relation" and "members" in element:
+                county_name = element["tags"].get("name", "Unknown County")
+                coords = []
+
+                for member in element["members"]:
+                    if member["type"] == "way" and "geometry" in member:
+                        coords.append([(point["lon"], point["lat"]) for point in member["geometry"]])
+
+                if coords:
+                    features.append({
+                        "type": "Feature",
+                        "properties": {"name": county_name},
+                        "geometry": {"type": "MultiPolygon", "coordinates": [coords]},
+                    })
+
+        self.border_data = {"type": "FeatureCollection", "features": features}
+        self.reposition()
+
+    def reposition(self):
+        self.canvas.clear()
+        for label in self.labels:
+            self.mapview.remove_widget(label)  # Clear old labels
+        self.labels = []
+
+        if not self.border_data:
+            return
+
+        with self.canvas:
+            Color(0, 0.7, 0.7, 0.8)
+            for feature in self.border_data["features"]:
+                county_name = feature["properties"]["name"]
+                coords = feature["geometry"]["coordinates"]
+                county_center = [0, 0]
+                total_points = 0
+
+                for polygon in coords:
+                    for line in polygon:
+                        points = []
+                        for lon, lat in line:
+                            x, y = self.mapview.get_window_xy_from(lat, lon, self.mapview.zoom)
+
+                            points.extend([x, y])
+                            county_center[0] += x
+                            county_center[1] += y
+                            total_points += 1
+                        Line(points=points, width=3, dash_offset=2, dash_length=5)
+
+                # Compute county center and add label
+                if total_points > 0:
+                    county_center[0] /= total_points
+                    county_center[1] /= total_points
+                    label = Label(text=county_name, size_hint=(None, None), color=(1, 1, 1, 1))
+                    label.pos = (county_center[0], county_center[1])
+                    self.mapview.add_widget(label)
+                    self.labels.append(label)
+
+

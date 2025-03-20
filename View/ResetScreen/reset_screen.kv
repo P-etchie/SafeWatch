@@ -1,0 +1,81 @@
+<ResetScreenView>
+    name: "reset screen"
+    md_bg_color: "#1E1E15"
+
+    MDFloatLayout:
+        md_bg_color: self.md_bg_color
+
+        MDCard:
+            size_hint: 0.9, 0.5
+            spacing: dp(10)
+            elevation: 12
+            shadow_radius: 20
+            shadow_offset: 0, 10
+            radius: [25, 25, 25, 25]
+            md_bg_color: 0.15, 0.15, 0.15, 0.9  # Glassmorphism effect
+            pos_hint: {"center_x": 0.5, "center_y": 0.55}
+
+            MDBoxLayout:
+                orientation: "vertical"
+                spacing: dp(30)
+                padding: "20dp"
+                adaptive_height: True
+                size_hint_y: None
+
+                MDLabel:
+                    text: "Forgot Password?"
+                    font_style: "H5"
+                    halign: "center"
+                    theme_text_color: "Custom"
+                    text_color: "teal" #1, 0.6, 0, 1
+
+                MDLabel:
+                    text: "Enter new password and confirm to reset."
+                    font_style: "Caption"
+                    halign: "center"
+                    theme_text_color: "Hint"
+
+                MDTextField:
+                    id: username
+                    hint_text: "Current Username"
+                    mode: "fill"
+                    icon_right: "account-box"
+                    size_hint_x: 0.9
+                    pos_hint: {"center_x": 0.5}
+                    text_color_hint: 1, 1, 1, 0.7
+
+                MDTextField:
+                    id: pass_field1
+                    hint_text: "Enter new password"
+                    mode: "fill"
+                    password: True
+                    icon_right: "eye-outline"
+                    size_hint_x: 0.9
+                    pos_hint: {"center_x": 0.5}
+                    text_color_hint: 1, 1, 1, 0.7
+
+                MDTextField:
+                    id: pass_field2
+                    hint_text: "Confirm new password"
+                    mode: "fill"
+                    password: True
+                    icon_right: "eye-outline"
+                    size_hint_x: 0.9
+                    pos_hint: {"center_x": 0.5}
+                    text_color_hint: 1, 1, 1, 0.7
+
+                MDRaisedButton:
+                    text: "Reset Password"
+                    size_hint_x: 0.8
+                    pos_hint: {"center_x": 0.5}
+                    md_bg_color: "teal" #1, 0.6, 0, 1
+                    on_release: root.send_reset_link(username, pass_field1, pass_field2)
+
+        MDRectangleFlatIconButton:
+            icon: "account-arrow-left-outline"
+            text: "Back to Login"
+            pos_hint: {"center_x": 0.5, "y": 0.1}
+            theme_text_color: "Custom"
+            text_color: "teal"
+            size_hint_x: .5
+            on_release: root.switch_screen("login screen")

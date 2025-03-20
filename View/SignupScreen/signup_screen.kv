@@ -1,0 +1,157 @@
+<SignupScreenView>
+    name: 'signup screen'
+    md_bg_color: '#1e1e15'
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 30
+        size_hint: 1, None
+        adaptive_height: True
+        elevation: 5
+
+        MDLabel:
+            text: "Your Safety Matters"
+            halign: "center"
+            font_size: dp(25)
+            theme_text_color: "Custom"
+            text_color: "teal"
+
+        MDLabel:
+            text: "Fill in your details to get you started"
+            font_size: dp(20)
+            halign: "center"
+            theme_text_color: "Custom"
+            text_color: "teal"
+
+
+        MDTextField:
+            id: fullname
+            hint_text: "Full Name"
+            mode: "fill"
+            size_hint_x: 0.8
+            pos_hint: {"center_x": 0.5}
+            icon_right: "account-details"
+            theme_text_color: "Custom"
+            text_color_normal: get_color_from_hex('#005b96')
+            text_color_focus: "teal"
+            icon_right_color_normal: "white"
+            icon_right_color_focus: "teal"
+            hint_text_color_normal: "white"
+            hint_text_color_focus: "teal"
+            line_color_normal: get_color_from_hex('#005b96')
+            line_color_focus: "green"
+
+
+        MDTextField:
+            id: username
+            hint_text: "Username"
+            mode: "fill"
+            size_hint_x: 0.8
+            pos_hint: {"center_x": 0.5}
+            icon_right: "account"
+            theme_text_color: "Custom"
+            text_color_normal: get_color_from_hex('#005b96')
+            text_color_focus: "teal"
+            icon_right_color_normal: "white"
+            icon_right_color_focus: "teal"
+            hint_text_color_normal: "white"
+            hint_text_color_focus: "teal"
+            line_color_normal: get_color_from_hex('#005b96')
+            line_color_focus: "green"
+
+        MDTextField:
+            id: email_address
+            hint_text: "Email Address"
+            mode: "fill"
+            size_hint_x: 0.8
+            pos_hint: {"center_x": 0.5}
+            icon_right: "email"
+            theme_text_color: "Custom"
+            text_color_normal: get_color_from_hex('#005b96')
+            text_color_focus: "teal"
+            icon_right_color_normal: "white"
+            icon_right_color_focus: "teal"
+            hint_text_color_normal: "white"
+            hint_text_color_focus: "teal"
+            line_color_normal: get_color_from_hex('#005b96')
+            line_color_focus: "green"
+
+        MDTextField:
+            id: phone
+            hint_text: "Phone Number"
+            mode: "fill"
+            size_hint_x: 0.8
+            pos_hint: {"center_x": 0.5}
+            icon_right: "cellphone-dock"
+            theme_text_color: "Custom"
+            text_color_normal: get_color_from_hex('#005b96')
+            text_color_focus: "teal"
+            icon_right_color_normal: "white"
+            icon_right_color_focus: "teal"
+            hint_text_color_normal: "white"
+            hint_text_color_focus: "teal"
+            line_color_normal: get_color_from_hex('#005b96')
+            line_color_focus: "green"
+
+
+        MDTextField:
+            id: pass_field1
+            hint_text: "Password"
+            password: True
+            mode: "fill"
+            size_hint_x: 0.8
+            pos_hint: {"center_x": 0.5}
+            icon_right: "eye"
+            theme_text_color: "Custom"
+            text_color_normal: get_color_from_hex('#005b96')
+            text_color_focus: "teal"
+            icon_right_color_normal: "white"
+            icon_right_color_focus: "teal"
+            hint_text_color_normal: "white"
+            hint_text_color_focus: "teal"
+            line_color_normal: get_color_from_hex('#005b96')
+            line_color_focus: "green"
+            on_icon_right:
+                pass_field1.password = False
+                pass_field1.icon_right = "eye-off"
+
+        MDTextField:
+            id: pass_field2
+            hint_text: "Confirm Password"
+            password: True
+            mode: "fill"
+            size_hint_x: 0.8
+            pos_hint: {"center_x": 0.5}
+            icon_right: "eye"
+            theme_text_color: "Secondary"
+            text_color_normal: get_color_from_hex('#005b96')
+            text_color_focus: "teal"
+            icon_right_color_normal: "white"
+            icon_right_color_focus: "teal"
+            hint_text_color_normal: "white"
+            hint_text_color_focus: "teal"
+            line_color_normal: get_color_from_hex('#005b96')
+            on_icon_right:
+                pass_field2.password = False
+                pass_field2.icon_right = "eye-off"
+
+
+        MDRectangleFlatIconButton:
+            text: "Register"
+            icon: "account-details"
+            size_hint_x: 0.5
+            pos_hint: {"center_x": 0.5}
+
+            on_release: root.registerUser(fullname, username, email_address, pass_field1, pass_field2, phone)
+
+        MDTextButton:
+            text: "Already have an account? Login"
+            pos_hint: {"center_x": 0.5}
+            theme_text_color: "Custom"
+            text_color: "teal" #get_color_from_hex('#2e003e')
+            on_release: root.switch_screen('login screen')
+
+        MDSeparator:
+            opacity: 0
+

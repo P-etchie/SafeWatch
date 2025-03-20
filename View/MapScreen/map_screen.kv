@@ -1,0 +1,33 @@
+<MapScreenView>
+    name: "map screen"
+    md_bg_color: get_color_from_hex('#88BDF2')
+    on_enter: self.on_enter()
+
+    MDRelativeLayout:
+        size_hint: 1,1
+        orientation: 'vertical'
+        spacing: dp(5)
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            spacing: dp(5)
+            padding: dp(5)
+
+            MDTopAppBar:
+                id: topbar_action
+                title: "Crime Hot Zones"
+                right_action_items: [["sitemap", lambda x: root.switch_screen('report screen')]]
+                left_action_items: [["arrow-left-drop-circle", lambda x: root.switch_screen('home screen')]]
+                md_bg_color: get_color_from_hex("#1E1E15")
+                text_color: get_color_from_hex('#b3cde0')
+                font_weight: "bold"
+
+            MapView:
+                id: map_view
+                zoom: 7
+                #0.0236, 37.9062
+                lat: 0.0236
+                lon: 37.9062
+
+
+

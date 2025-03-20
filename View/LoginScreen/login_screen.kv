@@ -1,0 +1,123 @@
+<LoginScreenView>
+    name: "login screen"
+    md_bg_color: app.md_bg_color
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: dp(10)
+        padding: dp(10)
+        size_hint: 1, 1
+
+        MDBoxLayout:
+            id: logo_placeholder
+            orientation: 'vertical'
+            spacing: dp(10)
+            padding: dp(10)
+            adaptive_height: True
+            size_hint_y: .4
+            size_hint_x: 1
+
+            Image:
+                source: "assets/images/safe6.png"
+                size: logo_placeholder.size
+                size_hint: 1, None
+                allow_stretch: False
+                keep_ratio: True
+                adaptive_height: False
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            spacing: dp(30)
+            padding: dp(20)
+            adaptive_height: True
+            size_hint_y: None
+            #pos_hint: {"center_y": .5}
+
+            MDTextField:
+                id: username
+                hint_text: "Username"
+                mode: "fill"
+                size_hint_x: 0.8
+                pos_hint: {"center_x": 0.5}
+                icon_right: "account"
+                theme_text_color: "Custom"
+                text_color_normal: get_color_from_hex('#005b96')
+                text_color_focus: "teal"
+                icon_right_color_normal: get_color_from_hex('#00a0b0')
+                icon_right_color_focus: "blue"
+                hint_text_color_normal: "teal"
+                hint_text_color_focus: "teal"
+                line_color_normal: get_color_from_hex('#005b96')
+                line_color_focus: "teal"
+                fill_color_normal: get_color_from_hex("#bbbbbb")
+
+
+            MDTextField:
+                id: password
+                hint_text: "Password"
+                password: True
+                mode: "fill"
+                size_hint_x: 0.8
+                pos_hint: {"center_x": 0.5}
+                icon_right: "eye"
+                theme_text_color: "Custom"
+                text_color_normal: get_color_from_hex('#005b96')
+                text_color_focus: "teal"
+                hint_text_color_normal: "teal"
+                hint_text_color_focus: "teal"
+                icon_right_color_normal: get_color_from_hex('#00a0b0')
+                icon_right_color_focus: "blue"
+                line_color_normal: 'white'#get_color_from_hex('#005b96')
+                line_color_focus: "teal"
+                fill_color_normal: get_color_from_hex("#bbbbbb")
+                on_double_tap: root.toggle_password(password)
+                on_selection_text: password.select_all = False
+                allow_copy: False
+
+            MDSeparator:
+                opacity: 0
+                height: dp(3)
+                md_bg_color: app.md_bg_color
+
+
+            MDRectangleFlatIconButton:
+                icon: "account-lock-open-outline"
+                icon_color: "#BAC095"
+                text: "Log In"
+                text_color: "#BAC095"
+                bold: True
+                size_hint_x: 0.55
+                pos_hint: {"center_x": 0.5}
+                #md_bg_color: "#BAC095"
+                theme_icon_color: "Custom"
+                theme_text_color: "Custom"
+                on_release: root.validate_login(username, password)
+
+            MDSeparator:
+                opacity: 0
+                height: dp(3)
+                md_bg_color: app.md_bg_color
+
+            MDTextButton:
+                text: "Don't have an account? Register"
+                pos_hint: {"center_x": 0.5}
+                theme_text_color: "Custom"
+                text_color: "teal" #get_color_from_hex('#2e003e')
+                on_release: root.switch_screen("signup screen")
+
+            MDSeparator:
+                spacing: dp(1)
+
+                MDLabel:
+                    text: "or"
+                    halign: "center"
+                    text_color: "grey"
+                    theme_text_color: "Custom"
+
+            MDTextButton:
+                text: "Forgot Password? Reset"
+                pos_hint: {"center_x": 0.5}
+                theme_text_color: "Custom"
+                text_color: "teal" #get_color_from_hex('#2e003e')
+                on_release: root.switch_screen("reset screen")
+

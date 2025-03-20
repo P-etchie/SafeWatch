@@ -1,0 +1,30 @@
+<HelpInfo>
+    orientation: 'vertical'
+    spacing: dp(20)
+    padding: dp(10)
+    size_hint_y: None
+
+
+    MDRectangleFlatIconButton:
+        id: all_cases
+        text: "All-Case-Crime-Reports.xlsx"
+        icon: "file-excel-outline"
+        halign: "left"
+        bold: True
+        text_color: '#BAC095'
+        size_hint_x : 1
+        theme_text_color: "Custom"
+        on_release: root.report_screen.get_filechooser_dir(all_cases.text)
+
+    MDRectangleFlatIconButton:
+        id: user_cases
+        text: "User-Case-Crime-Reports.xlsx"
+        icon: "file-excel-outline"
+        halign: "left"
+        bold: True
+        text_color: '#BAC095'
+        size_hint_x: 1
+        theme_text_color: "Custom"
+        on_release: root.report_screen.get_filechooser_dir(user_cases.text)
+
+

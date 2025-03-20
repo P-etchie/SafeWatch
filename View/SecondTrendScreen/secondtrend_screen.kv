@@ -1,0 +1,230 @@
+<SecondTrendScreenView>
+    name: "secondtrend screen"
+    md_bg_color: app.md_bg_color
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        adaptive_height: True
+        size_hint: 1, 1
+        spacing: dp(10)
+        padding: dp(10)
+
+        MDTopAppBar:
+            title: "STATISTICS PER COUNTY"
+            elevation: 8
+            left_action_items: [["arrow-left", lambda x: root.switch_screen("trends screen")]]
+            right_action_items: [["magnify", lambda x: root.switch_screen("trends screen")]]
+            #md_bg_color: '#845763'
+            md_bg_color: '#544823'
+
+        MDBoxLayout:
+            id: stat_years
+            orientation: 'horizontal'
+            padding: dp(10)
+            spacing: dp(10)
+            size_hint_y: None
+            height: self.minimum_height
+            md_bg_color: get_color_from_hex('#1E1E15')
+            radius: [0,]
+
+            MDTextField:
+                id: county_input
+                hint_text: "Enter County Name"
+                mode: "rectangle"
+                size_hint_x: 0.9
+                pos_hint: {"center_x": 0.5}
+                on_text_validate: root.process_search_activity(county_input.text)
+
+        ScrollView:
+            size_hint_y: 1
+            bar_width: 0
+
+            MDBoxLayout:
+                orientation: "vertical"
+                padding: dp(10)
+                spacing: dp(10)
+                adaptive_height: True
+                radius: [15,]
+
+                MDCard:
+                    size_hint: 1, None
+                    height: dp(200)
+                    radius: [15,]
+                    padding: dp(15)
+                    #md_bg_color: '#A2574F'
+                    md_bg_color: "#332216"
+                    #md_bg_color: '#544823'
+
+
+                    MDBoxLayout:
+                        id: county_list
+                        orientation: 'vertical'
+                        spacing: dp(12)
+                        padding: dp(10)
+                        size_hint: 1, 1
+
+                        MDLabel:
+                            bold: True
+                            id: county_name
+                            text: "COUNTY NAME"
+                            font_size: dp(23)
+                            halign: "center"
+                            text_color: '#A257A'
+                            theme_text_color: "Custom"
+                            markup: True
+                            height: dp(30)
+
+                        MDSeparator:
+                            color: county_list.md_bg_color
+                            opacity: 0
+                            height: dp(5)
+
+                        MDLabel:
+                            id: county_population
+                            text: "Population: "
+                            font_style: "Body1"
+                            halign: "left"
+                            theme_text_color: "Secondary"
+                            markup: True
+                            height: dp(30)
+                            bold: True
+
+                        MDSeparator:
+                            color: county_list.md_bg_color
+                            opacity: 0
+                            height: dp(1)
+
+                        MDLabel:
+                            id: peak_crime_yr
+                            text: "Peak Year: "
+                            #font_style: "Body1"
+                            halign: "left"
+                            theme_text_color: "Secondary"
+                            markup: True
+                            height: dp(30)
+                            bold: True
+
+                        MDSeparator:
+                            color: county_list.md_bg_color
+                            opacity: 0
+                            height: dp(1)
+
+                        MDLabel:
+                            id: crime_rate
+                            text: "Total Crimes (2018-2023):"
+                            font_style: "Body1"
+                            halign: "left"
+                            theme_text_color: "Secondary"
+                            markup: True
+                            height: dp(30)
+                            bold: True
+
+                        MDSeparator:
+                            color: county_list.md_bg_color
+                            height: dp(1)
+                            opacity: 0
+
+                        MDLabel:
+                            id: most_reported_crime
+                            text: "Most Reported Crime: "
+                            #font_style: "Body1"
+                            halign: "left"
+                            theme_text_color: "Secondary"
+                            markup: True
+                            height: dp(30)
+                            bold: True
+
+                        MDSeparator:
+                            color: county_list.md_bg_color
+                            height: dp(5)
+
+                        MDLabel:
+                            id: least_reported_crime
+                            text: "Least Reported Crime: "
+                            #font_style: "Body1"
+                            halign: "left"
+                            theme_text_color: "Secondary"
+                            markup: True
+                            height: dp(30)
+                            bold: True
+
+                MDCard:
+                    size_hint: 1, None
+                    height: dp(350)
+                    radius: [15,]
+                    padding: dp(15)
+                    md_bg_color: app.md_bg_color
+
+                    BoxLayout:
+                        id: crime_chart
+                        size_hint: 1, 1
+
+                MDLabel:
+                    text: "Pie Chart Crime Distribution"
+                    halign: "center"
+                    bold: True
+                    text_color: "teal"
+                    theme_text_color: "Custom"
+                    font_size: 20
+
+                MDCard:
+                    size_hint: 1, None
+                    height: dp(350)
+                    radius: [15,]
+                    padding: dp(15)
+                    md_bg_color: app.md_bg_color
+
+                    BoxLayout:
+                        id: crime_chart_field2
+                        size_hint: 1, 1
+
+                MDCard
+                    size_hint: 1, None
+                    height: dp(350)
+                    radius: [15,]
+                    padding: dp(15)
+                    md_bg_color: '#332216'
+
+                    BoxLayout:
+                        id: crime_stats
+                        size_hint: 1, 1
+                        spacing: dp(10)
+                        padding: dp(10)
+                        orientation: 'vertical'
+
+                        StatLabel:
+                            id: crime_density
+                            text: "Crime Density (per 1,000 people):"
+
+                        StatLabel:
+                            id: crime_growth_rate
+                            text: "Crime Growth Rate:"
+
+                        StatLabel:
+                            id: crime_rank
+                            text: "Crime Rank:"
+
+                        StatLabel:
+                            id: peak_crime_year
+                            text: "Peak Crime Year:"
+
+                        StatLabel:
+                            id: lowest_crime_year
+                            text: "Lowest Crime Year:"
+
+                        StatLabel:
+                            id: most_common_crime
+                            text: f"Most Common Crime:"
+
+
+
+<StatLabel@MDLabel>
+    text: ""
+    bold: True
+    markup: True
+    halign: "left"
+    text_color: "white"
+    theme_text_color: "Secondary"
+
+
+
