@@ -10,7 +10,7 @@ else:
     from kivymd.app import MDApp
 
 import importlib, logging, time, threading, schedule
-import View.screens
+import View.screens, json
 from PIL import ImageGrab
 from kivy import Config
 from kivy.cache import Cache
@@ -50,10 +50,11 @@ class SafeWatch(MDApp):
         self.sms_report_count = 0
 
     def build_app(self) -> MDScreenManager:
-        Window.position = "custom"
-        Window.top = 40
-        Window.left = 10
-        Window.size = (1080 / 2.5, 2340 / 3)
+        Window.fullscreen = "auto"
+        #Window.position = "custom"
+        #Window.top = 40
+        #Window.left = 10
+        #Window.size = (1080 / 2.5, 2340 / 3)
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Teal"
         self.theme_cls.material_style = "M3"
