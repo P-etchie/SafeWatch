@@ -1,7 +1,5 @@
 import os
-
 import kivy.logger
-
 USE_HOT_RELOAD = os.getenv("HOT_RELOAD", "1") == "1"
 
 if USE_HOT_RELOAD:
@@ -11,7 +9,6 @@ else:
 
 import importlib, logging, time, threading, schedule
 import View.screens, json
-from PIL import ImageGrab
 from kivy import Config
 from kivy.cache import Cache
 from kivy.clock import Clock
@@ -63,7 +60,7 @@ class SafeWatch(MDApp):
             self.manager_screens = MDScreenManager(MDFadeSlideTransition())
 
         Window.bind(on_key_down=self.on_keyboard_down)
-        importlib.reload(View.screens)
+        #importlib.reload(View.screens)
         screens = View.screens.screens
 
         for i, name_screen in enumerate(screens.keys()):
@@ -84,7 +81,6 @@ class SafeWatch(MDApp):
         if not self.fireb:
             self.fireb = FirebaseConnection()
             self.__user_reported_cases = self.fireb.user_total_crime_reports(self.__active_user['user'])
-
         self.start_news_scheduler()
 
     def start_news_scheduler(self):
@@ -93,7 +89,7 @@ class SafeWatch(MDApp):
             while True:
                 schedule.run_pending()
                 time.sleep(60)
-
+                
         scheduler_thread = threading.Thread(target=run_scheduler, daemon=True)
         scheduler_thread.start()
 
@@ -137,10 +133,9 @@ class SafeWatch(MDApp):
         self._user_settings.put('general', language='en')
         self._user_settings.put('notifications', push_notifications=self.app_notifications)
         self._user_settings.put('notifications', email_notifications=self.app_email_notifications)
-
-    def on_language_change(self):
-        self.root.clear_widgets()
-        self.root.add_widget(self.build_app())
+        self.__user_settings.put('native_reports', call_reports=0)
+        self.__user_settings.put('native_reports', sms_reports=0)
+        self.__user_settings.put('native_reports', media_uploads=0)
 
     @property
     def active_user(self):
