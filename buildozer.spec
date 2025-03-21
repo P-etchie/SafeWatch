@@ -37,18 +37,17 @@ version = 1.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-<<<<<<< HEAD
-requirements = python3.10,kivy==2.3.0,kivymd==1.2.0,watchdog,folium,matplotlib==3.5.0,kivy-garden.mapview,pandas,plyer==2.1.0,bs4,firebase-admin,bs4,requests,schedule
 
-=======
 requirements = python3,kivy==2.3.0,kivymd==1.2.0,watchdog,folium,matplotlib==3.5.0,kivy-garden.mapview,pandas,plyer==2.1.0,bs4,firebase-admin,bs4,requests,schedule
->>>>>>> 7c33f91 (Updated main.py and screen management for SafeWatch)
+
+requirements = python3,kivy==2.3.0,kivymd==1.2.0,watchdog,folium,matplotlib==3.5.0,kivy-garden.mapview,pandas,plyer==2.1.0,bs4,firebase-admin,bs4,requests,schedule
+
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy
 
 # (str) Presplash of the application
-#presplash.filename = %(source.dir)s/data/presplash.png
+presplash.filename = assets/images/safe3.png
 
 # (str) Icon of the application
 icon.filename = assets/images/safe3.png
