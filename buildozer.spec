@@ -37,8 +37,12 @@ version = 1.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
+<<<<<<< HEAD
 requirements = python3.10,kivy==2.3.0,kivymd==1.2.0,watchdog,folium,matplotlib==3.5.0,kivy-garden.mapview,pandas,plyer==2.1.0,bs4,firebase-admin,bs4,requests,schedule
 
+=======
+requirements = python3,kivy==2.3.0,kivymd==1.2.0,watchdog,folium,matplotlib==3.5.0,kivy-garden.mapview,pandas,plyer==2.1.0,bs4,firebase-admin,bs4,requests,schedule
+>>>>>>> 7c33f91 (Updated main.py and screen management for SafeWatch)
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy
@@ -95,10 +99,10 @@ fullscreen = 0
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions/#build-options-1 for all the supported syntaxes and properties)
-android.permissions = android.permission.INTERNET, (name=android.permission.WRITE_EXTERNAL_STORAGE;maxSdkVersion=18), android.permission.ACCESS_FINE_LOCATION, android.permission.ACCESS_COARSE_LOCATION, android.permission.POST_NOTIFICATIONS
+android.permissions = INTERNET, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, POST_NOTIFICATIONS, MANAGE_EXTERNAL_STORAGE
 
 # (list) features (adds uses-feature -tags to manifest)
-android.features = android.hardware.usb.host
+#android.features = android.hardware.usb.host
 
 # (int) Target Android API, should be as high as possible.
 android.api = 31
@@ -147,11 +151,11 @@ android.activity_class_name = org.kivy.android.PythonActivity
 
 # (str) Extra xml to write directly inside the <manifest> element of AndroidManifest.xml
 # use that parameter to provide a filename from where to load your custom XML code
-android.extra_manifest_xml = ./src/android/extra_manifest.xml
+#android.extra_manifest_xml = ./src/android/extra_manifest.xml
 
 # (str) Extra xml to write directly inside the <manifest><application> tag of AndroidManifest.xml
 # use that parameter to provide a filename from where to load your custom XML arguments:
-android.extra_manifest_application_arguments = ./src/android/extra_manifest_application_arguments.xml
+#android.extra_manifest_application_arguments = ./src/android/extra_manifest_application_arguments.xml
 
 # (str) Full name including package path of the Java class that implements Python Service
 # use that parameter to set custom Java class which extends PythonService

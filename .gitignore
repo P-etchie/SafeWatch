@@ -10,6 +10,6 @@ __pycache__/
 # Ignore virtual environments
 venv/
 .env/
-
+android.ndk
 bin/
 safewatch-227f0-ad06271af4b8.json

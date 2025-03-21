@@ -1,5 +1,16 @@
-{"theme": {"dark_mode": true},
-  "general": {"language": "en"},
-  "notifications": {"email_notifications": false},
-  "native_reports": {"call_reports": 0,  "sms_reports": 0,  "media_uploads": 0}
+{
+    "theme": {
+        "dark_mode": true
+    },
+    "general": {
+        "language": "en"
+    },
+    "notifications": {
+        "email_notifications": false
+    },
+    "native_reports": {
+        "call_reports": 0,
+        "sms_reports": 0,
+        "media_uploads": 0
+    }
 }
