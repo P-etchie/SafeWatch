@@ -1,17 +1,8 @@
-import os
-import kivy.logger
-USE_HOT_RELOAD = os.getenv("HOT_RELOAD", "1") == "1"
-
-if USE_HOT_RELOAD:
-    from kivymd.tools.hotreload.app import MDApp
-else:
-    from kivymd.app import MDApp
-
-import importlib, logging, time, threading, schedule
-import View.screens, json
+import os, kivy.logger, json
 from kivy import Config
 from kivy.cache import Cache
 from kivy.clock import Clock
+from kivymd.app import MDApp
 from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
 from kivy.storage.jsonstore import JsonStore
@@ -19,8 +10,11 @@ from kivy.properties import BooleanProperty, StringProperty
 from kivy.graphics import Fbo, ClearColor, ClearBuffers, Rectangle
 from kivymd.uix.screenmanager import MDScreenManager
 from kivymd.uix.transition import MDFadeSlideTransition, MDSwapTransition
+import logging, time, threading, schedule
 from Model.database import FirebaseConnection
 from Utility.format_news import fetch_crime_news
+from View.screens import screens
+
 
 logging.getLogger("matplotlib").setLevel(logging.WARNING)
 
@@ -35,34 +29,27 @@ class SafeWatch(MDApp):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.load_all_kv_files(self.directory)
+        self.title = "SafeWatch"
+        self.icon = "assets/images/safe1.png"
         self.fireb = None
         self.fbo = None
         self.version = 1.0
-        self.title = "SafeWatch"
-        self.icon = "assets/images/safe1.png"
-        self.__active_user = {"user": None, "loginAt": None}
-        self._user_settings = None
-        self.__user_reported_cases = str(0)
-        self.call_report_count = 0
-        self.sms_report_count = 0
-
-    def build_app(self) -> MDScreenManager:
-        Window.fullscreen = "auto"
-        #Window.position = "custom"
-        #Window.top = 40
-        #Window.left = 10
-        #Window.size = (1080 / 2.5, 2340 / 3)
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Teal"
         self.theme_cls.material_style = "M3"
+        self.call_report_count = 0
+        self.sms_report_count = 0
+        self._user_settings = None
+        self.__user_reported_cases = str(0)
+        self.__active_user = {"user": None, "loginAt": None}
+        self.manager_screens = MDScreenManager(MDFadeSlideTransition())
 
-        if self.manager_screens is None:
-            self.manager_screens = MDScreenManager(MDFadeSlideTransition())
+    def build(self) -> MDScreenManager:
+        self.generate_application_screens()
+        return self.manager_screens
 
-        Window.bind(on_key_down=self.on_keyboard_down)
-        #importlib.reload(View.screens)
-        screens = View.screens.screens
-
+    def generate_application_screens(self) -> None:
         for i, name_screen in enumerate(screens.keys()):
             model = screens[name_screen]["model"]()
             controller = screens[name_screen]["controller"](model)
@@ -70,8 +57,6 @@ class SafeWatch(MDApp):
             view.manager_screens = self.manager_screens
             view.name = name_screen
             self.manager_screens.add_widget(view)
-
-        return self.manager_screens
 
     def on_keyboard_down(self, window, keyboard, keycode, text, modifiers) -> None:
         if "meta" in modifiers or "ctrl" in modifiers and text == "r":
