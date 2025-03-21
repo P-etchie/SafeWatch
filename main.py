@@ -21,7 +21,6 @@ logging.getLogger("matplotlib").setLevel(logging.WARNING)
 
 class SafeWatch(MDApp):
     KV_DIRS = [os.path.join(os.getcwd(), "View")]
-    manager_screens = MDScreenManager()
     md_bg_color = get_color_from_hex('#1E1E15')
     prev = app_data = None
     app_notifications = BooleanProperty(False)
