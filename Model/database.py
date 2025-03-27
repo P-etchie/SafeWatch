@@ -129,8 +129,7 @@ class FirebaseConnection:
         with open('safewatch.json', "r", encoding="utf-8") as crime_json:
             data = json.load(crime_json)
             app.app_data = data
-
-    @staticmethod
+            
     def upload_blob(self, file_path):
         bucket = storage.bucket()
         file_name = os.path.basename(file_path)
