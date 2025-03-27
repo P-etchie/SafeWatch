@@ -1,4 +1,4 @@
-import kivy.logger, hashlib, json 
+import kivy.logger, hashlib, json, os
 from firebase_admin.auth import create_user
 from kivymd.app import MDApp
 import firebase_admin, json
@@ -6,7 +6,7 @@ from firebase_admin import firestore
 from kivymd.uix.label import MDLabel
 from kivymd.uix.snackbar import MDSnackbar
 from libs.device import MobileFeatures
-# from firebase_admin import storage
+from firebase_admin import storage
 
 class FirebaseConnection:
     def __init__(self):
@@ -130,8 +130,7 @@ class FirebaseConnection:
             data = json.load(crime_json)
             app.app_data = data
             
-    def upload_blob(self, file_path):
-        """
+    def upload_blob(self, file_path):  
         bucket = storage.bucket()
         file_name = os.path.basename(file_path)
         blob = bucket.blob(f"user_uploads/{file_name}")
@@ -144,7 +143,7 @@ class FirebaseConnection:
             print(f"File URL: {file_url}")
         except Exception as e:
             MDSnackbar(MDLabel(text=f"Upload failed: {str(e)}", text_color="red")).open()
-        """
+        
     def save_user_report(self, user_crime_report, username):
         doc_case = f"{username}.case"
 
