@@ -106,8 +106,8 @@ class ResetScreenView(BaseScreenView):
 
     def on_leave(self, *args):
         if self.ids.pass_field1.text or self.ids.pass_field2.text or self.ids.username.text:
-            pass_field1.text = ""
-            pass_field2.text = ""
+            self.ids.pass_field1.text = ""
+            self.ids.pass_field2.text = ""
             self.ids.usernme.text = ""
 
 
