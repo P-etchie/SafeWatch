@@ -1,7 +1,7 @@
 import collections
 import os ,pandas
 from datetime import datetime
-import kivy.logger
+import kivy.logger, json
 from plyer import filechooser, gps
 from functools import partial
 from kivy.properties import StringProperty
