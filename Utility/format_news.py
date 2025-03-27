@@ -1,4 +1,4 @@
-import json, pandas ,requests, os, random
+import json, pandas ,requests, os, random, kivy.logger
 from bs4 import BeautifulSoup
 from collections import OrderedDict
 
@@ -29,7 +29,7 @@ def fetch_crime_news():
                     }
                     news_data.append(news_item)
         else:
-            print(f"Failed to fetch data from {url}")
+            kivy.logger.Logger.info(f"Failed to fetch data from {url}")
 
     pandas.DataFrame(news_data).to_json('Utility/Alerts.json', orient='records')
 
@@ -46,6 +46,6 @@ def load_news():
             return []
 
     except json.JSONDecodeError as e:
-        print(f"[ERROR] JSONDecodeError: {e}")
+        kivy.logger.Logger.info(f"[ERROR] JSONDecodeError: {e}")
         return []
 
