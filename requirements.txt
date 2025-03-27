@@ -4,7 +4,7 @@ watchdog
 folium
 matplotlib
 kivy-garden.mapview
-kivy-garden.matlplotlib 
+kivy-garden.matplotlib
 plyer==2.1.0
 bs4
 firebase-admin
