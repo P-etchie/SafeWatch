@@ -1,4 +1,4 @@
-import kivy.logger, hashlib, json
+import kivy.logger, hashlib, json, os
 from firebase_admin.auth import create_user
 from kivymd.app import MDApp
 import firebase_admin, json
